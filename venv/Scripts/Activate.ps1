@@ -27,7 +27,7 @@ function global:deactivate ([switch]$NonDestructive) {
 
 deactivate -nondestructive
 
-$env:VIRTUAL_ENV="C:\Projekte\VerteilteSysteme\PraktischeUebung1\venv"
+$env:VIRTUAL_ENV="D:\99_projekte\Python\vps\PraktischeUebung1_philip\venv"
 
 if (! $env:VIRTUAL_ENV_DISABLE_PROMPT) {
     # Set the prompt to include the env name
