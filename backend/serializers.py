@@ -2,8 +2,9 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from backend.models import Invoice, Address, InvoicePosition
 
+# murks wegen der verflixten forwärtsdeklaration
+class AddressSerializerConcept(ModelSerializer):
 
-class AddressSerializer(ModelSerializer):
     class Meta:
         model = Address
         fields = ('name', 'zip', 'id')
@@ -11,7 +12,6 @@ class AddressSerializer(ModelSerializer):
 
 class InvoicePositionSerializer(ModelSerializer):
     total_position = serializers.SerializerMethodField()
-
 
     class Meta:
         model = InvoicePosition
@@ -22,9 +22,19 @@ class InvoicePositionSerializer(ModelSerializer):
 
 
 class InvoiceSerializer(ModelSerializer):
+    address = AddressSerializerConcept(many=False, read_only=True)
     positions = InvoicePositionSerializer(many=True, read_only=True)
-    addresses = AddressSerializer(many=True, read_only=True)
+
     class Meta:
         model = Invoice
-        fields = ('invoice_nr', 'invoice_date', 'positions', 'description', 'addresses')
+        fields = ('address','invoice_nr', 'invoice_date', 'positions', 'description')
+
+
+class AddressSerializer(AddressSerializerConcept):
+    invoices = InvoiceSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Address
+        fields = ('name', 'zip', 'id', 'invoices')
+
 
