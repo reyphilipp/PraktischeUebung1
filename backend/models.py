@@ -19,7 +19,7 @@ class Invoice(models.Model):
     invoice_nr = models.CharField(max_length=60)
     invoice_date = models.DateField()
 
-    address = models.ForeignKey('Address', related_name='addresses', on_delete=models.DO_NOTHING)
+    address = models.ForeignKey('Address', related_name='invoices', on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return 'Invoice: %s' % self.invoice_nr
